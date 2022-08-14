@@ -35,15 +35,36 @@ reddit = praw.Reddit(
 subreddit = reddit.subreddit(input("Enter subreddit (no 'r/' necessary): ")) # Subreddit to search
 howmany = int(input("How many posts to download? "))
 
+mode = input("Top, Hot, or New? ")
 posts = []
-for post in subreddit.top(limit=howmany):
-    try:
-        print(F"Title: {post.title} \n Score: {post.score} Comments: {post.num_comments} \n URL: {post.url} \n {post.media['reddit_video']['fallback_url']} \n" 
-        F"---------------------------------------------------------------------------------------------------------------------")
-        posts.append(post.media['reddit_video']['fallback_url'])
-    except (TypeError): 
-        print(F'Post is missing title or something idrc, skipping it')
-        pass
+match mode:
+    case 'top':
+        for post in subreddit.top(limit=howmany):
+            try:
+                print(F"Title: {post.title} \n Score: {post.score} Comments: {post.num_comments} \n URL: {post.url} \n {post.media['reddit_video']['fallback_url']} \n" 
+                F"---------------------------------------------------------------------------------------------------------------------")
+                posts.append(post.media['reddit_video']['fallback_url'])
+            except (TypeError): 
+                print(F'Post is missing title or something idrc, skipping it')
+                pass
+    case 'hot':
+        for post in subreddit.hot(limit=howmany):
+            try:
+                print(F"Title: {post.title} \n Score: {post.score} Comments: {post.num_comments} \n URL: {post.url} \n {post.media['reddit_video']['fallback_url']} \n" 
+                F"---------------------------------------------------------------------------------------------------------------------")
+                posts.append(post.media['reddit_video']['fallback_url'])
+            except (TypeError): 
+                print(F'Post is missing title or something idrc, skipping it')
+                pass
+    case 'new':
+        for post in subreddit.top(limit=howmany):
+            try:
+                print(F"Title: {post.title} \n Score: {post.score} Comments: {post.num_comments} \n URL: {post.url} \n {post.media['reddit_video']['fallback_url']} \n" 
+                F"---------------------------------------------------------------------------------------------------------------------")
+                posts.append(post.media['reddit_video']['fallback_url'])
+            except (TypeError): 
+                print(F'Post is missing title or something idrc, skipping it')
+                pass
 
 audio_posts = []
 for post in list(posts):
